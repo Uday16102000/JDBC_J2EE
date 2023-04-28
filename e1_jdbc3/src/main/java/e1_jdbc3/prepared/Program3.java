@@ -1,0 +1,37 @@
+package e1_jdbc3.prepared;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class Program3 {
+	
+	public static void main(String[] args) throws ClassNotFoundException, SQLException 
+	{
+		
+		Scanner s= new Scanner(System.in);
+		System.out.println("Enter id");
+		int id=s.nextInt();
+//		1.load or register
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		//2.establish connection
+		Connection connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/employeedb", "root","root");
+		
+		//create statement
+		PreparedStatement statement= connection.prepareStatement("delete from employee where id=?");
+	statement.setInt(1, id);
+	
+	//4.execute statement
+	int a=statement.executeUpdate();
+	
+	//close
+	connection.close();
+	
+	System.out.println("id " + id + " deleted " + a);
+	
+	}
+
+}

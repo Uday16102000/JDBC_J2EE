@@ -1,0 +1,34 @@
+package e1_jdbc4;
+import java.util.Scanner;
+
+public class UserMain 
+{
+public static void main(String[] args)throws Exception {
+	UserCrud crud= new UserCrud();
+	Scanner sc= new Scanner(System.in);
+	
+	//asking user to provide data to save
+	System.out.println("enter your id");
+	int id=sc.nextInt();
+	System.out.println("enter your name");
+	String name=sc.next();
+	System.out.println("enter your  email");
+	String email=sc.next();
+	System.out.println("enter your phone");
+	String phone=sc.next();
+	
+	System.out.println("enter your pwd ");
+	String pwd=sc.next();
+	
+	User user= new User();
+	user.setId(id);
+	user.setName(name);
+	user.setEmail(email);
+	user.setPhone(phone);
+	user.setPwd(pwd);
+	
+	crud.saveUser(user);
+//	boolean check=true;
+
+}
+}

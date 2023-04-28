@@ -1,0 +1,46 @@
+package e1_jdbc1.prepared;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public class Program1 
+{
+public static void main(String[] args) throws ClassNotFoundException, SQLException 
+{
+	
+	Scanner sc=new Scanner(System.in);
+	
+	System.out.println("enter the id");
+	int id=sc.nextInt();
+	System.out.println("enter then name");
+	String name=sc.next();
+	System.out.println("enter the number");
+	String phone=sc.next();
+	
+//	load or register
+	Class.forName("com.mysql.cj.jdbc.Driver");
+	
+	//establish connection
+	Connection connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/studentjdbcdb","root", "root");
+
+	//create statement
+//	Statement statement= connection.createStatement();
+	String query="insert into student values(?,?,?)";
+	PreparedStatement statement= connection.prepareStatement(query);
+	statement.setInt(1, id);
+	statement.setString(2, name);
+	statement.setString(3, phone);
+	//execute statement
+
+	statement.execute();
+	
+	//close
+	connection.close();
+	
+	System.out.println("inserted" + name +"data");
+}
+}

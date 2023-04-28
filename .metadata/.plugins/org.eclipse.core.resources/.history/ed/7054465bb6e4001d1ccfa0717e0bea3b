@@ -1,0 +1,25 @@
+package e1_jdbc4.user.employee;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+public class EmployeeCrud 
+{
+	
+	public void saveEmployee(Employee emp) throws Exception
+	{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection c= DriverManager.getConnection("jdbc:mysql://localhost:3306/employeedb2","root","root");
+		PreparedStatement s= c.prepareStatement("insert into employee2 values(?,?,?,?)");
+		s.setInt(1, emp.getId());
+		s.setString(2,emp.getName());
+		s.setString(3, emp.getPhone());
+		s.setString(4, emp.getEmailid());
+		s.execute();
+		c.close();
+		
+		
+	}
+
+}

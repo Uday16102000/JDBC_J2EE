@@ -1,0 +1,62 @@
+package e1_jdbc4.user.batch;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
+
+import e1_jdbc4.User;
+
+public class BatchExecution 
+
+{
+public static void main(String[] args) throws Exception
+{
+	User user4= new User();
+	user4.setId(412);
+	user4.setName("uday");
+	user4.setEmail("uday@gmail.com");
+	user4.setContact("398423");
+	user4.setPwd("2w1");
+	
+	User user3= new User();
+	user3.setId(2383);
+	user3.setName("uday");
+	user3.setEmail("uday@gmail.com");
+	user3.setContact("398423");
+	user3.setPwd("2w1");
+	
+	User user1= new User();
+	user1.setId(2373);
+	user1.setName("uday");
+	user1.setEmail("uday@gmail.com");
+	user1.setContact("398423");
+	user1.setPwd("2w1");
+	
+	List<User> list= new ArrayList<User>();
+   list.add(user4);
+   list.add(user3);
+   list.add(user1);
+	// 1.load
+	Class.forName("com.mysql.cj.jdbc.Driver");
+	// establish the connection
+	Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/userdb", "root", "root");
+
+	// creation of statement
+
+	PreparedStatement statement = connection.prepareStatement("insert into user values(?,?,?,?,?)");
+   for(User user :list)
+   {
+	   statement.setInt(1, user.getId());
+statement.setString(2, user.getName());
+statement.setString(3, user.getEmail());
+statement.setString(4, user.getContact());
+statement.setString(5, user.getPwd());
+statement.addBatch();
+
+   }
+   statement.executeBatch();
+    statement.execute();
+   connection.close();
+}
+}
